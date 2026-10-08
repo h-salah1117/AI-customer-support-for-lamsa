@@ -1,0 +1,3 @@
+[data]
+products_path = "data/lamsa_products.csv"
+policies_path = "data/lamsa_policies.csv"

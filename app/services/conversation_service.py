@@ -1,4 +1,4 @@
-'''
+"""
  Responsibilities:
 
 Maintain conversation context
@@ -16,7 +16,7 @@ Conversation Session :
 │   ├── size
 │   └── quantity
 └── conversation_state
-'''
+"""
 
 from enum import Enum
 from pydantic import BaseModel, Field
@@ -57,9 +57,7 @@ class ConversationService:
     def get_or_create_session(self, customer_id: str) -> ConversationSession:
         # Retrieve existing session or spawn new session for customer
         if customer_id not in self._sessions:
-            self._sessions[customer_id] = ConversationSession(
-                customer_id=customer_id
-            )
+            self._sessions[customer_id] = ConversationSession(customer_id=customer_id)
         return self._sessions[customer_id]
 
     def update_item_context(

@@ -1,11 +1,12 @@
-'''
-    Responsibilities:
+"""
+   Responsibilities:
 
- Retrieve relevant policies
- Rerank candidates
- Return verified policy context
- Handle no/low-confidence match
-'''
+Retrieve relevant policies
+Rerank candidates
+Return verified policy context
+Handle no/low-confidence match
+"""
+
 from enum import Enum
 from pydantic import BaseModel, Field
 
@@ -23,7 +24,6 @@ class PolicyResult(BaseModel):
 
 
 class PolicyService:
-
     def __init__(
         self,
         repository,
@@ -36,8 +36,8 @@ class PolicyService:
 
     def get_policy_context(self, user_query: str) -> PolicyResult:
         # Step 1: Search repository for top matching candidate
-        top_candidate, confidence_score = (
-            self.repository.find_most_similar_policy(user_query)
+        top_candidate, confidence_score = self.repository.find_most_similar_policy(
+            user_query
         )
 
         # Guard Clause: Handle missing candidate or empty text safely
@@ -69,6 +69,7 @@ class PolicyService:
                 policy_text=None,
                 confidence=confidence_score,
             )
+
 
 class PolicyResponseHandler:
     @staticmethod

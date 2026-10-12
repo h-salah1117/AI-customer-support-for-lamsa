@@ -1,5 +1,6 @@
 from app.data.product_repository import ProductRepository
 
+
 def test_find_by_sku():
     repo = ProductRepository()
     repo.load_products()

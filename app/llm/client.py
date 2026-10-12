@@ -1,4 +1,4 @@
-'''
+"""
     Responsabilities:
 
 - communicating with the LLM provider
@@ -7,4 +7,4 @@
 - exposing generation/extraction capabilities
 - returning success/error results
 
-'''
+"""

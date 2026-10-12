@@ -62,3 +62,6 @@ class ProductRepository:
 
     def find_by_sku(self, sku: str) -> Product | None:
         return self.product_by_sku.get(sku)
+    
+    def get_all_products(self) -> list[Product]:
+        return list(self.product_by_sku.values())

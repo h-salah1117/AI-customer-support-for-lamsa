@@ -6,20 +6,13 @@ Determine available alternatives (sizes/colors)
 Update/reduce stock after confirmed order
 '''
 
-
-
 # ProductService
 
 #     __init__
 #         ↓
 #     receive ProductRepository
 
-from app.data.product_repository import ProductRepository
 from app.data.product_repository import Product
-from app.config import config
-from app.utils.normalizer import Normalizer
-
-normalizer= Normalizer()
 
 class ProductService:
     def __init__(self , repository):
@@ -42,7 +35,7 @@ class ProductService:
 
     def check_availability(self, sku, quantity) -> bool:   
             product = self.get_product(sku)
-            if not product:
+            if not product or quantity <= 0:
                 return False
             return product.stock_qty >= quantity
 #     reduce_stock(sku, quantity)
@@ -58,7 +51,7 @@ class ProductService:
 #     return result
     def reduce_stock(self, sku, quantity) -> bool:
             product = self.get_product(sku)
-            if not product:
+            if not product or quantity <= 0:
                 return False
             if product.stock_qty < quantity:
                 return False
@@ -66,28 +59,24 @@ class ProductService:
             return True
 
     def get_all_products(self) -> list[Product]:
-        return list(self.product_by_sku.values())
+            return self.product_repository.get_all_products()
     
     def get_size_alternatives(self, sku , quantity) -> list[Product]:
             product = self.get_product(sku)
-            if not product:
+            if not product or quantity <= 0:
                 return []
             alternatives = []
             for p in self.get_all_products():
-                normalizer(p.name)
                 if p.name == product.name and p.color == product.color and p.size != product.size and self.check_availability(p.sku,quantity):
                     alternatives.append(p)
             return alternatives
     def get_color_alternatives(self, sku, quantity) -> list[Product]:
             product = self.get_product(sku)
-            if not product:
+            if not product or quantity <= 0:
                 return []
             alternatives = []
             for p in self.get_all_products():
-                normalizer(p.name)
                 if p.name == product.name and p.size == product.size and p.color != product.color and self.check_availability(p.sku,quantity):
                     alternatives.append(p)
             return alternatives
 
-repository = ProductRepository()
-service = ProductService(repository)

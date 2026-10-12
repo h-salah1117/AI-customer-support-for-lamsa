@@ -1,5 +1,3 @@
-import re
-
 
 class Normalizer:
     # حركات + تطويلة: تتشال خالص

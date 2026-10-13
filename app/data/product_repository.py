@@ -24,7 +24,7 @@ Product
 
 import pandas as pd
 from pydantic import BaseModel, NonNegativeInt, PositiveFloat , Field
-from app.config import config
+from app.config import PRODUCTS_PATH
 from app.utils.normalizer import Normalizer
 
 normalizer = Normalizer()
@@ -46,7 +46,7 @@ class ProductRepository:
 
     def load_products(self):
 # Read raw data from CSV
-        raw_data = pd.read_csv(config["data"]["products_path"])
+        raw_data = pd.read_csv(PRODUCTS_PATH)
         raw_data["name"] = raw_data["name"].apply(normalizer.normalize_text)
         raw_data["color"] = raw_data["color"].apply(normalizer.normalize_text)
         raw_data["size"] = raw_data["size"].apply(normalizer.normalize_text)

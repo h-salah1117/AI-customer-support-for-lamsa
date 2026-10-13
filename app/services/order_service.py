@@ -1,4 +1,4 @@
-"""
+'''
     Responsibilities:
 
 Manage order confirmation
@@ -8,7 +8,7 @@ Create/update order status
 Notify seller
 Handle notification retry/failure
 Return confirmation result so the response layer tells the customer
-"""
+'''
 
 from enum import Enum
 from pydantic import BaseModel, Field, NonNegativeInt, PositiveFloat
@@ -82,10 +82,7 @@ class OrderService:
     ) -> tuple[bool, str]:
         # Step 1: Validate stock availability before adding
         if not self.product_service.check_availability(product.sku, quantity):
-            return (
-                False,
-                f"Requested quantity for SKU {product.sku} is not available in stock.",
-            )
+            return False, f"Requested quantity for SKU {product.sku} is not available in stock."
 
         order = self.get_or_create_draft_order(customer_id)
 
@@ -167,10 +164,6 @@ class OrderService:
 
         # Step 5: Trigger seller notification via WhatsApp Client
         notification_sent = self._notify_seller(order)
-        if not notification_sent:
-            print(
-                f"Warning: Order for {customer_id} confirmed, but seller notification failed after retries."
-            )
 
         # Step 6: Return structured result
         return OrderConfirmationResult(
